@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Caravan.Logic/.vs/Caravan.Logic
+/Caravan.Logic/obj
