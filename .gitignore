@@ -5,3 +5,6 @@
 /.vs
 /Caravan.Logic/.vs/Caravan.Logic
 /Caravan.Logic/obj
+/Caravan.LogicTests/bin/Debug/net8.0
+/Caravan.LogicTests/obj
+/Caravan.Logic/bin/Debug/net8.0
