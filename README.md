@@ -1,5 +1,16 @@
 # PoseUebung-004 -- Caravan
 
+#### Unit Tests:  
+> ![image](https://github.com/user-attachments/assets/7eabbdeb-fc96-4a14-bd6d-2798d3e8d142)
+#### Demo:  
+![image](https://github.com/user-attachments/assets/1dfb0ac7-fb95-4ce7-bae8-f07fd9628f43)
+
+
+https://github.com/user-attachments/assets/aaf72635-0695-4632-9fff-d64294ba7cf0
+
+
+---  
+
 <summary>
   Abstrakte Basisklasse, die generelle Eigenschaften und Methoden von Packtieren beschreibt.
 </summary>
@@ -14,6 +25,7 @@ public abstract class PackAnimal
     _maxPace = maxPace;
   }
 
+  public abstract int Pace { get; } 
   public string Name { get { return _name!; } }
   public int MaxPace { get { return _maxPace; } }
   public int Load
@@ -21,7 +33,6 @@ public abstract class PackAnimal
     get { return _load; }
     set { _load = value < 0 ? 0 : value; }
   }
-  public abstract int Pace { get; } 
   public Caravan? MyCaravan
   {
     get { return _myCaravan; }
@@ -39,7 +50,25 @@ public abstract class PackAnimal
   private Caravan? _myCaravan = null;
  }
 ```
+<details>  
+   <summary> klick for a short Version: </summary>  
 
+```c#
+public abstract class PackAnimal(string name , int maxPace)
+{
+  public abstract int Pace { get; }
+  public string Name { get; } = name;
+  public int MaxPace { get ; } = maxPace; 
+  public Caravan? MyCaravan { get ; set ; } = null;
+  public int Load { get => _load; set => _load = value < 0 ? 0 : value; }
+  public override string ToString() => $"{Name} ({Load}/{Pace}/{MaxPace})";
+  
+  private int _load = 0;
+}
+```
+</details>  
+
+---  
 
 <summary>
   Kamel mit Maximalgeschwindigkeit 20
@@ -55,6 +84,20 @@ public sealed class Camel : PackAnimal
   public override int Pace { get { return MaxPace - Load; } }
 }
 ```
+<details>  
+   <summary> klick for a short Version: </summary>  
+
+```c#
+public sealed class Camel(string name , int maxPace) 
+  : PackAnimal(name , maxPace < 0 ? 0 : maxPace > 20 ? 20 : maxPace)
+  {
+    public override int Pace => MaxPace - Load;
+    public override string ToString() => "🐫 " + base.ToString();
+  }
+```
+</details>  
+
+---  
 
 <summary>
   Pferd mit Maximalgeschwindigkeit 70
@@ -70,6 +113,18 @@ public sealed class Horse : PackAnimal
   public override int Pace { get { return MaxPace - (10 * Load); } }
 }
 ```
+<details>  
+   <summary> klick for a short Version: </summary>  
+
+```c#
+public sealed class Horse(string name , int maxPace) 
+  : PackAnimal(name , maxPace < 0 ? 0 : maxPace > 70 ? 70 : maxPace)
+  {
+    public override int Pace => MaxPace - (10 * Load);
+    public override string ToString() => "🐎 " + base.ToString();
+  }
+```
+</details>  
 
 ---  
 
@@ -192,16 +247,15 @@ public class Caravan
 
   private bool IsNotInCaravan(PackAnimal packAnimal)
   {
-    bool isInCaravan = false;
     Element? run = _first;
 
     while (run != null)
     {
       if (run.Animal == packAnimal)
-        return !true;
+        return false;
       run = run.Next;
     }
-    return !isInCaravan;
+    return true;
   }
 
   public void RemovePackAnimal(PackAnimal packAnimal)
@@ -276,3 +330,15 @@ public class Caravan
   }
 }
 ```
+<details>  
+   <summary> klick for a short Version: </summary>  
+
+```c#
+private class Element(PackAnimal animal , Element? next = null)
+{
+  public PackAnimal Animal { get; set; } = animal;
+  public Element? Next { get; set; } = next;
+}
+```
+ 
+</details>  
