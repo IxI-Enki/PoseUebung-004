@@ -80,7 +80,7 @@ public sealed class Horse : PackAnimal
 ```c#
 public class Caravan
 {
-  public Caravan() { }
+  public Caravan(string caravanName = "") { _caravanName = caravanName; }
 
   public int Count
   {
@@ -266,7 +266,7 @@ public class Caravan
   }
 
   private Element? _first = null;
-  private string _caravanName;        // implement mit nameof() ? 
+  private string _caravanName;
 
   private class Element
   {
