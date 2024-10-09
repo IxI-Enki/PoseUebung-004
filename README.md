@@ -173,7 +173,8 @@ public class Caravan
 
     if (_first == null)
       _first = new Element(packAnimal! , _first);
-    else
+
+    if (IsNotInCaravan(packAnimal))
     {
       Element? run = _first;
 
@@ -183,6 +184,19 @@ public class Caravan
       }
       run.Next = new Element(packAnimal! , null);
     }
+  }
+  private bool IsNotInCaravan(PackAnimal packAnimal)
+  {
+    bool isInCaravan = false;
+    Element? run = _first;
+
+    while (run != null)
+    {
+      if (run.Animal == packAnimal)
+        return !true;
+      run = run.Next;
+    }
+    return !isInCaravan;
   }
 
   public void RemovePackAnimal(PackAnimal packAnimal)
