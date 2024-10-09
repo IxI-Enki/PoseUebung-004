@@ -172,7 +172,10 @@ public class Caravan
       return;
 
     if (_first == null)
+    {
+      packAnimal.MyCaravan = this;
       _first = new Element(packAnimal! , _first);
+    }
 
     if (IsNotInCaravan(packAnimal))
     {
@@ -182,10 +185,11 @@ public class Caravan
       {
         run = run.Next;
       }
+      packAnimal.MyCaravan = this;
       run.Next = new Element(packAnimal! , null);
-      run.Next.Animal.MyCaravan = this;
     }
   }
+
   private bool IsNotInCaravan(PackAnimal packAnimal)
   {
     bool isInCaravan = false;
