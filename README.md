@@ -237,16 +237,15 @@ public class Caravan
 
   private bool IsNotInCaravan(PackAnimal packAnimal)
   {
-    bool isInCaravan = false;
     Element? run = _first;
 
     while (run != null)
     {
       if (run.Animal == packAnimal)
-        return !true;
+        return false;
       run = run.Next;
     }
-    return !isInCaravan;
+    return true;
   }
 
   public void RemovePackAnimal(PackAnimal packAnimal)
