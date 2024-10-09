@@ -183,6 +183,7 @@ public class Caravan
         run = run.Next;
       }
       run.Next = new Element(packAnimal! , null);
+      run.Next.Animal.MyCaravan = this;
     }
   }
   private bool IsNotInCaravan(PackAnimal packAnimal)
@@ -203,6 +204,8 @@ public class Caravan
   {
     if (packAnimal == null || this.Count == 0)
       return;
+
+    packAnimal.MyCaravan = null;
 
     if (_first!.Animal == packAnimal)
     {
