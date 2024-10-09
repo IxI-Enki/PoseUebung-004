@@ -42,7 +42,24 @@ public abstract class PackAnimal
   private Caravan? _myCaravan = null;
  }
 ```
+<details>  
+   <summary> klick for a short Version: </summary>  
 
+```c#
+public abstract class PackAnimal(string name , int maxPace)
+{
+  public abstract int Pace { get; }
+  public string Name { get; } = name;
+  public int MaxPace { get ; } = maxPace; 
+  public Caravan? MyCaravan { get ; set ; } = null;
+  public int Load { get => _load; set => _load = value < 0 ? 0 : value; }
+
+  private int _load = 0;
+}
+```
+</details>  
+
+---  
 
 <summary>
   Kamel mit Maximalgeschwindigkeit 20
@@ -58,6 +75,19 @@ public sealed class Camel : PackAnimal
   public override int Pace { get { return MaxPace - Load; } }
 }
 ```
+<details>  
+   <summary> klick for a short Version: </summary>  
+
+```c#
+public sealed class Camel(string name , int maxPace) 
+  : PackAnimal(name , maxPace < 0 ? 0 : maxPace > 20 ? 20 : maxPace)
+  {
+    public override int Pace => MaxPace - Load;
+  }
+```
+</details>  
+
+---  
 
 <summary>
   Pferd mit Maximalgeschwindigkeit 70
@@ -73,6 +103,17 @@ public sealed class Horse : PackAnimal
   public override int Pace { get { return MaxPace - (10 * Load); } }
 }
 ```
+<details>  
+   <summary> klick for a short Version: </summary>  
+
+```c#
+public sealed class Horse(string name , int maxPace) 
+  : PackAnimal(name , maxPace < 0 ? 0 : maxPace > 70 ? 70 : maxPace)
+  {
+    public override int Pace => MaxPace - (10 * Load);
+  }
+```
+</details>  
 
 ---  
 
