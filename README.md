@@ -168,8 +168,6 @@ public class Caravan
 
   public void AddPackAnimal(PackAnimal? packAnimal)
   {
-    if (packAnimal == null)
-      return;
     if (packAnimal.MyCaravan != null)
       RemovePackAnimal(packAnimal);
 
@@ -208,10 +206,7 @@ public class Caravan
 
   public void RemovePackAnimal(PackAnimal packAnimal)
   {
-    if (packAnimal == null || this.Count == 0)
-      return;
-
-    packAnimal.MyCaravan = null;
+    packAnimal!.MyCaravan = null;
 
     if (_first!.Animal == packAnimal)
     {
