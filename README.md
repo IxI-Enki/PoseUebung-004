@@ -28,6 +28,11 @@ public abstract class PackAnimal
     set { _myCaravan = value; }
   }
 
+  public override string ToString()
+  {
+    return $"{Name} ({Load}/{Pace}/{MaxPace})";
+  }
+
   private string? _name;
   private int _maxPace;
   private int _load = 0;
