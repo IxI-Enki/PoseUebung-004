@@ -42,7 +42,7 @@ public abstract class PackAnimal
 
 
 <summary>
-  Kamel mit Maximalgeschwindigkeit 20 erzeugen
+  Kamel mit Maximalgeschwindigkeit 20
 </summary>
  
 ```c#
@@ -57,7 +57,7 @@ public sealed class Camel : PackAnimal
 ```
 
 <summary>
-  Pferd mit Maximalgeschwindigkeit 70 erzeugen
+  Pferd mit Maximalgeschwindigkeit 70
 </summary>
 
 ```c#
