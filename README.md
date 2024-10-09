@@ -147,7 +147,7 @@ public class Caravan
   {
     get
     {
-      return FindSlowestAnimal().Pace;
+      return FindSlowestAnimal().Pace < 0 ? 0 : FindSlowestAnimal().Pace;
     }
   }
 
