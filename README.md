@@ -35,11 +35,10 @@ public abstract class PackAnimal
  }
 ```
 
+
 <summary>
   Kamel mit Maximalgeschwindigkeit 20 erzeugen
 </summary>
-<param name="name"></param>
-<param name="maxPace"></param>
  
 ```c#
 public class Camel : PackAnimal
@@ -50,3 +49,22 @@ public class Camel : PackAnimal
 
   public override int Pace { get { return MaxPace - Load; } }
 }
+```
+
+<summary>
+  Pferd mit Maximalgeschwindigkeit 70 erzeugen
+</summary>
+
+```c#
+public class Horse : PackAnimal
+{
+  public Horse(string name , int maxPace)
+    : base(name , maxPace < 0 ? 0 : maxPace > 70 ? 70 : maxPace)
+  { }
+
+  public override int Pace { get { return MaxPace - (10 * Load); } }
+}
+```
+
+---  
+
