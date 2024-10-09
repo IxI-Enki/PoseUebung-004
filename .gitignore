@@ -14,3 +14,7 @@
 /Caravan.Mono/obj
 /Caravan.Mono/.config
 *.mgcb
+/Caravan.Mono/Content/bin/DesktopGL/textures
+/Caravan.Mono/Content/obj/DesktopGL
+/Caravan.Mono/bin/Debug
+/Caravan.Mono/Content/bin/DesktopGL/Content/textures
