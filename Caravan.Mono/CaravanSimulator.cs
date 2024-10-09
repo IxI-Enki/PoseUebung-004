@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Caravan.Mono
 {
-  public class Game1 : Game
+  public class CaravanSimulator : Game
   {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    public Game1()
+    public CaravanSimulator()
     {
       _graphics = new GraphicsDeviceManager(this);
       Content.RootDirectory = "Content";

@@ -1,3 +1,3 @@
 ﻿
-using var game = new Caravan.Mono.Game1();
+using var game = new Caravan.Mono.CaravanSimulator();
 game.Run();
