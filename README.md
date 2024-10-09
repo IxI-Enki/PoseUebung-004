@@ -17,6 +17,7 @@ public abstract class PackAnimal
     _maxPace = maxPace;
   }
 
+  public abstract int Pace { get; } 
   public string Name { get { return _name!; } }
   public int MaxPace { get { return _maxPace; } }
   public int Load
@@ -24,7 +25,6 @@ public abstract class PackAnimal
     get { return _load; }
     set { _load = value < 0 ? 0 : value; }
   }
-  public abstract int Pace { get; } 
   public Caravan? MyCaravan
   {
     get { return _myCaravan; }
