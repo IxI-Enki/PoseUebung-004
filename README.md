@@ -73,6 +73,9 @@ public sealed class Horse : PackAnimal
 
 ---  
 
+<summary>
+  Karavanen Struktur (unfinished ;) )
+</summary>
 ```c#
 public class Caravan
 {
