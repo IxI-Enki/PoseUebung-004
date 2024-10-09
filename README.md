@@ -1,5 +1,8 @@
 # PoseUebung-004 -- Caravan
 
+> ![image](https://github.com/user-attachments/assets/7eabbdeb-fc96-4a14-bd6d-2798d3e8d142)
+
+
 <summary>
   Abstrakte Basisklasse, die generelle Eigenschaften und Methoden von Packtieren beschreibt.
 </summary>
