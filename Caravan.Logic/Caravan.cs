@@ -1,4 +1,6 @@
 ﻿
+using System.Text;
+
 namespace Caravan.Logic;
 
 public class Caravan
@@ -225,6 +227,55 @@ public class Caravan
       run = run.Next;
     }
     return fastest!.Animal;
+  }
+
+  public override string ToString()
+  {
+    StringBuilder sb = new();
+
+    sb.Append($"Name der Karavane: {_caravanName}" + "\n");
+    sb.Append($"Ladung           : {Load} Ballen" + "\n");
+    sb.Append($"Geschwindigkeit  : {Pace} km/h" + "\n");
+    sb.Append($"Anzahl der Tiere : {Count} Tiere" + "\n");
+    sb.Append("----------------------------------------\n");
+    Element? run = _first;
+    while (run != null)
+    {
+      sb.Append($"{run.Animal}" + "\n");
+      run = run.Next;
+    }
+    return sb.ToString();
+  }
+  public void PrintCaravan()
+  {
+    Element? run = _first;
+    StringBuilder sb = new StringBuilder();
+
+    sb.Append("🧍");
+
+    while (run != null)
+    {
+      sb.Append(FindAnimalEmoji(run)); // ..
+      run = run.Next;
+      if (run != null)
+        sb.Append("ᴗ");
+    }
+    Console.Write(sb.ToString());
+  }
+
+  private string FindAnimalEmoji(Element run)
+  {
+    string animalEmoji = "";
+    switch (run.Animal)
+    {
+      case Horse:
+        animalEmoji = "🐎";
+        break;
+      case Camel:
+        animalEmoji = "🐫";
+        break;
+    }
+    return animalEmoji;
   }
 
   #region FIELDS

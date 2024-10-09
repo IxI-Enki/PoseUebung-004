@@ -15,4 +15,7 @@ public sealed class Camel : PackAnimal
   /// Geschwindigkeit in Abhängigkeit der Ladung (Reduktion um 1 je Ballen)
   /// </summary>
   public override int Pace { get { return MaxPace - Load; } }
+  public override string ToString() => "🐫 " + base.ToString();
+
 }
+

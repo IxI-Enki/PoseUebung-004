@@ -15,4 +15,6 @@ public sealed class Horse : PackAnimal
   /// Geschwindigkeit in Abhängigkeit der Ladung (Reduktion um 10 je Ballen)
   /// </summary>
   public override int Pace { get { return MaxPace - (10 * Load); } }
+  public override string ToString() => "🐎 " + base.ToString();
+
 }
