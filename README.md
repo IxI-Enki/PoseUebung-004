@@ -53,7 +53,8 @@ public abstract class PackAnimal(string name , int maxPace)
   public int MaxPace { get ; } = maxPace; 
   public Caravan? MyCaravan { get ; set ; } = null;
   public int Load { get => _load; set => _load = value < 0 ? 0 : value; }
-
+  public override string ToString() => $"{Name} ({Load}/{Pace}/{MaxPace})";
+  
   private int _load = 0;
 }
 ```
