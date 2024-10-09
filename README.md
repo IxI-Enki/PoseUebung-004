@@ -1,7 +1,11 @@
 # PoseUebung-004 -- Caravan
 
+#### Unit Tests:  
 > ![image](https://github.com/user-attachments/assets/7eabbdeb-fc96-4a14-bd6d-2798d3e8d142)
+#### Demo:  
+![image](https://github.com/user-attachments/assets/70140df1-ccdf-48b4-8295-0aa004a40897)
 
+---  
 
 <summary>
   Abstrakte Basisklasse, die generelle Eigenschaften und Methoden von Packtieren beschreibt.
@@ -84,6 +88,7 @@ public sealed class Camel(string name , int maxPace)
   : PackAnimal(name , maxPace < 0 ? 0 : maxPace > 20 ? 20 : maxPace)
   {
     public override int Pace => MaxPace - Load;
+    public override string ToString() => "🐫 " + base.ToString();
   }
 ```
 </details>  
@@ -112,6 +117,7 @@ public sealed class Horse(string name , int maxPace)
   : PackAnimal(name , maxPace < 0 ? 0 : maxPace > 70 ? 70 : maxPace)
   {
     public override int Pace => MaxPace - (10 * Load);
+    public override string ToString() => "🐎 " + base.ToString();
   }
 ```
 </details>  
