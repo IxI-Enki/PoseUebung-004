@@ -156,7 +156,7 @@ public class Caravan
     Element? run = _first;
     Element? slowest = run;
 
-    while (run != null && slowest != null)
+    while (run!.Next != null)
     {
       if (run.Animal.Pace < slowest!.Animal.Pace)
         slowest = run;
@@ -170,6 +170,8 @@ public class Caravan
   {
     if (packAnimal == null)
       return;
+    if (packAnimal.MyCaravan != null)
+      RemovePackAnimal(packAnimal);
 
     if (_first == null)
     {
@@ -227,7 +229,6 @@ public class Caravan
         run = run.Next;
       }
     }
-
   }
 
   public void Unload()
@@ -255,7 +256,7 @@ public class Caravan
     Element? run = _first;
     Element? fastest = run;
 
-    while (run != null && fastest != null)
+    while (run!.Next != null)
     {
       if (run.Animal.Pace > fastest!.Animal.Pace)
         fastest = run;
