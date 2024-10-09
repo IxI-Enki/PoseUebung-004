@@ -1,26 +1,9 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text;
-using System.Xml.Linq;
-
+﻿
 namespace Caravan.Logic;
 
 public class Caravan
 {
-  private class Element
-  {
-    public Element(PackAnimal animal , Element next)
-    {
-      Animal = animal;
-      Next = next;
-    }
-    public PackAnimal Animal { get; set; }
-    public Element Next { get; set; }
-  }
-
-  public Caravan()
-  {
-
-  }
+  public Caravan(string name = "") { _caravanName = name; }
 
   /// <summary>
   /// Gibt die Anzahl der Tragtiere in der Karavane zurück
@@ -30,11 +13,11 @@ public class Caravan
     get
     {
       int count = 0;
-      PackAnimal? run = _first;
 
+      Element? run = _first;
       while (run != null)
       {
-        run = run.NextAnimal;
+        run = run.Next;
         count++;
       }
       return count;
@@ -48,15 +31,15 @@ public class Caravan
   {
     get
     {
-      int count = 0;
-      PackAnimal? run = _first;
+      int loadCount = 0;
 
+      Element? run = _first;
       while (run != null)
       {
-        count = count + run.Load;
-        run = run.NextAnimal;
+        loadCount += run.Animal.Load;
+        run = run.Next;
       }
-      return count;
+      return loadCount;
     }
   }
 
@@ -66,20 +49,17 @@ public class Caravan
   /// </summary>
   /// <param name="name">Name des Packtiers</param>
   /// <returns>Packtier</returns>
-  public PackAnimal this[ string name ] { get => GetAnimalByIndexerName(name); }
-  private PackAnimal GetAnimalByIndexerName(string name)
+  public PackAnimal? this[ string name ]
   {
-    PackAnimal? run = null;
-
-    if (_first == null)
-      throw new ArgumentNullException("Empty caravan");
-
-    run = _first;
-    while (run!.Name != name)
+    get
     {
-      run = run.NextAnimal;
+      Element? run = _first;
+      while (run != null && run.Animal.Name != name)
+      {
+        run = run.Next;
+      }
+      return run!.Animal;
     }
-    return run!;
   }
 
   /// <summary>
@@ -89,25 +69,20 @@ public class Caravan
   /// </summary>
   /// <param name="index"></param>
   /// <returns></returns>
-  public PackAnimal this[ int index ] { get => GetAnimalByIndex(index); }
-  private PackAnimal GetAnimalByIndex(int index)
+  public PackAnimal? this[ int index ]
   {
-    CheckIndexOutOfRange(index);
-
-    int counter = 0;
-    PackAnimal? run = _first;
-
-    while (counter < index)
+    get
     {
-      counter++;
-      run = run!.NextAnimal;
+      int count = 0;
+      Element? run = _first;
+
+      while (run != null && count < index)
+      {
+        run = run.Next;
+        count++;
+      }
+      return run!.Animal;
     }
-    return run!;
-  }
-  private void CheckIndexOutOfRange(int index)
-  {
-    if (index < 0 || index >= Count)
-      throw new ArgumentOutOfRangeException(nameof(index));
   }
 
   /// <summary>
@@ -115,90 +90,96 @@ public class Caravan
   /// vom langsamsten Tier bestimmt wird. Dabei wird die Ladung 
   /// der Tiere berücksichtigt
   /// </summary>
-  public int Pace { get => FindSlowestAnimal().Pace < 0 ? 0 : FindSlowestAnimal().Pace; }
+  public int Pace
+  {
+    get
+    {
+      return FindSlowestAnimal().Pace < 0 ? 0 : FindSlowestAnimal().Pace;
+    }
+  }
   private PackAnimal FindSlowestAnimal()
   {
-    PackAnimal? run = _first;
-    PackAnimal? slowestAnimal = run;
+    Element? run = _first;
+    Element? slowest = run;
 
-    while (run!.NextAnimal != null)
+    while (run!.Next != null)
     {
-      if (slowestAnimal!.Pace > run.Pace)
-        slowestAnimal = run;
+      if (run.Animal.Pace < slowest!.Animal.Pace)
+        slowest = run;
 
-      run = run.NextAnimal;
+      run = run.Next;
     }
-    return slowestAnimal!;
+    return slowest!.Animal;
   }
 
   /// <summary>
   /// Fügt ein Tragtier in die Karawane ein.
   /// Dem Tragtier wird mitgeteilt, in welcher Karawane es sich nun befindet.
   /// </summary>
-  /// <param name="p">einzufügendes Tragtier</param>
-  public void AddPackAnimal(PackAnimal p)
+  /// <param name="packAnimal">einzufügendes Tragtier</param>
+  public void AddPackAnimal(PackAnimal? packAnimal)
   {
-    if (p == null)
-      return;
-    if (IsAlreadyInCaravan(p))
-      return;
-    if (p.MyCaravan != null)
-      RemovePackAnimal(p);
-
-    p.MyCaravan = this;
+    //    if (packAnimal == null) return;
+    if (packAnimal!.MyCaravan != null)
+      RemovePackAnimal(packAnimal);
 
     if (_first == null)
-      _first = p;
-    else
     {
-      PackAnimal run = _first;
-      while (run.NextAnimal != null)
+      packAnimal.MyCaravan = this;
+      _first = new Element(packAnimal! , _first);
+    }
+
+    if (IsNotInCaravan(packAnimal))
+    {
+      Element? run = _first;
+
+      while (run.Next != null)
       {
-        run = run.NextAnimal;
+        run = run.Next;
       }
-      run.NextAnimal = p;
+      packAnimal.MyCaravan = this;
+      run.Next = new Element(packAnimal! , null);
     }
   }
-
-  private bool IsAlreadyInCaravan(PackAnimal p)
+  private bool IsNotInCaravan(PackAnimal packAnimal)
   {
     bool isInCaravan = false;
-    int count = 0;
-    PackAnimal? run = _first;
-    while (count < Count)
-    {
-      if (run == p)
-        return true;
-      count++;
-
-      run = run!.NextAnimal;
-    }
-
-    return isInCaravan;
-  }
-
-  /// <summary>
-  /// Nimmt das Tragtier p aus dieser Karawane heraus
-  /// </summary>
-  /// <param name="p">Tragtier, das die Karawane verläßt</param>
-  public void RemovePackAnimal(PackAnimal p)
-  {
-    p.MyCaravan = null;
-
-    if (_first == p)
-    {
-      _first = _first.NextAnimal;
-    }
-    p.NextAnimal = null;
-
-    PackAnimal? run = _first;
+    Element? run = _first;
 
     while (run != null)
     {
-      if (run == p)
-        run = run.NextAnimal;
+      if (run.Animal == packAnimal)
+        return !true;
+      run = run.Next;
+    }
+    return !isInCaravan;
+  }
 
-      run = run?.NextAnimal;
+  /// <summary>
+  /// Nimmt das Tragtier o aus dieser Karawane heraus
+  /// </summary>
+  /// <param name="packAnimal">Tragtier, das die Karawane verläßt</param>
+  public void RemovePackAnimal(PackAnimal packAnimal)
+  {
+    //    if (packAnimal == null || this.Count == 0) return;
+
+    packAnimal.MyCaravan = null;
+
+    if (_first!.Animal == packAnimal)
+    {
+      _first = _first.Next;
+    }
+    else
+    {
+      Element? run = _first;
+
+      while (run != null && run.Next != null)
+      {
+        if (run.Next.Animal == packAnimal)
+          run.Next = run.Next.Next;
+
+        run = run.Next;
+      }
     }
   }
 
@@ -207,18 +188,12 @@ public class Caravan
   /// </summary>
   public void Unload()
   {
-    PackAnimal? p = _first;
-
-    while (p != null)
+    Element? run = _first;
+    while (run != null)
     {
-      p.Load = 0;
-
-      if (p.NextAnimal != null)
-        p = p.NextAnimal;
-      else
-        return;
+      run.Animal.Load = 0;
+      run = run.Next;
     }
-    return;
   }
 
   /// <summary>
@@ -233,50 +208,40 @@ public class Caravan
 
     while (loadToDistribute > 0)
     {
-      FindFastestAnimal().Load += 1;
+      FindFastestAnimal().Load++;
       loadToDistribute--;
     }
   }
-
   private PackAnimal FindFastestAnimal()
   {
-    PackAnimal? run = _first;
-    PackAnimal? fastestAnimal = run;
+    Element? run = _first;
+    Element? fastest = run;
 
-    while (run!.NextAnimal != null)
+    while (run!.Next != null)
     {
-      if (fastestAnimal!.Pace < run.Pace)
-        fastestAnimal = run;
+      if (run.Animal.Pace > fastest!.Animal.Pace)
+        fastest = run;
 
-      run = run.NextAnimal;
+      run = run.Next;
     }
-    return fastestAnimal!;
+    return fastest!.Animal;
   }
 
   #region FIELDS
-  private PackAnimal? _first = null;
-  private string _caravanName = string.Empty;
+  private Element? _first = null;
+  private string _caravanName;        // implement mit nameof() ? 
   #endregion
 
-  public override string ToString()
+  #region EMBEDED CLASS ELEMENT
+  private class Element
   {
-    StringBuilder sb = new();
-
-    sb.Append("Caravane: ");
-    sb.Append(_caravanName);
-    sb.Append("MaxPace: " + Pace + " mp ");
-
-    sb.Append("PackAnimal(s): ");
-    PackAnimal? run = _first;
-    while (run != null)
+    public Element(PackAnimal animal , Element? next = null)
     {
-      sb.Append(" " + run);
-      run = run.NextAnimal;
+      Animal = animal;
+      Next = next;
     }
-
-    return sb.ToString();
+    public PackAnimal Animal { get; set; }
+    public Element? Next { get; set; }
+    #endregion
   }
-
-
-
 }

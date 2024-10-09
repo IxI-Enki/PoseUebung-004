@@ -1,18 +1,18 @@
 ﻿namespace Caravan.Logic;
 
-/// <summary>
-/// Kamel mit Maximalgeschwindigkeit 20 erzeugen
-/// </summary>
-/// <param name="name"></param>
-/// <param name="mp"></param>
-public class Camel(string name , int mp) : PackAnimal(name , mp)
+public sealed class Camel : PackAnimal
 {
-  public int Mp { get; set; } = SetValidPace_MinMax(mp);
-  private static int SetValidPace_MinMax(int mp)
-    => mp < 0 ? 0 : mp > 20 ? 20 : mp;
+  /// <summary>
+  /// Kamel mit Maximalgeschwindigkeit 20 erzeugen
+  /// </summary>
+  /// <param name="name"></param>
+  /// <param name="maxPace"></param>
+  public Camel(string name , int maxPace)
+    : base(name , maxPace < 0 ? 0 : maxPace > 20 ? 20 : maxPace)
+  { }
 
   /// <summary>
   /// Geschwindigkeit in Abhängigkeit der Ladung (Reduktion um 1 je Ballen)
   /// </summary>
-  public override int Pace { get => Math.Max(Mp - Load , 0); }
+  public override int Pace { get { return MaxPace - Load; } }
 }

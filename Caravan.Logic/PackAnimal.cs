@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace Caravan.Logic;
+﻿namespace Caravan.Logic;
 
 /// <summary>
 /// Abstrakte Basisklasse, die generelle Eigenschaften und Methoden von 
@@ -8,35 +6,42 @@ namespace Caravan.Logic;
 /// </summary>
 public abstract class PackAnimal
 {
+  #region CONSTRUCTORS
   /// <summary>
   /// Damit die Vorlage compilierbar bleibt
   /// </summary>
-  public PackAnimal() { }
+  public PackAnimal()
+  {
+
+  }
+
   /// <summary>
   /// Name des Tiers und Maximalgeschwindigkeit des Tiers
   /// </summary>
   /// <param name="name"></param>
-  /// <param name="mp"></param>
-  public PackAnimal(string name , int mp)
+  /// <param name="maxPace"></param>
+  public PackAnimal(string name , int maxPace)
   {
-    Name = name;
-    MaxPace = mp;
+    _name = name;
+    _maxPace = maxPace;
   }
+  #endregion
 
-  public string? Name { get; set; }
+  #region PROPERTIES
+  public string Name { get { return _name!; } }
 
   /// <summary>
   /// Maximale Geschwindigkeit des Tiers
   /// </summary>
-  public int MaxPace { get; set; }
+  public int MaxPace { get { return _maxPace; } }
 
   /// <summary>
   /// Anzahl der Ballen, die das Tier trägt
   /// </summary>
   public int Load
   {
-    get => _load;
-    set => _load = value;
+    get { return _load; }
+    set { _load = value < 0 ? 0 : value; }
   }
 
   /// <summary>
@@ -48,28 +53,24 @@ public abstract class PackAnimal
   /// Karawane, in der das Tier mitläuft. Kann einfach durch Zuweisung 
   /// gewechselt werden. Umkettung in Karawanen erfolgt automatisch
   /// </summary>
-  public Caravan? MyCaravan { get; set; }
-
-  public PackAnimal? NextAnimal { get; set; } = null;
-
-  public override string ToString()
+  public Caravan? MyCaravan
   {
-    StringBuilder sb = new();
-    sb.Append(Name);
-    sb.Append('(');
-    sb.Append(Load);
-    sb.Append('/');
-    sb.Append(Pace);
-    sb.Append('/');
-    sb.Append(MaxPace);
-    sb.Append(")");
-    return sb.ToString();
+    get { return _myCaravan; }
+    set { _myCaravan = value; }
   }
-
-
-  #region FIELDS
-  private int _load = 0;
   #endregion
 
+  #region OVERRIDES
+  public override string ToString()
+  {
+    return $"{Name} ({Load}/{Pace}/{MaxPace})";
+  }
+  #endregion
 
+  #region FIELDS
+  private string? _name;
+  private int _maxPace;
+  private int _load = 0;
+  private Caravan? _myCaravan = null;
+  #endregion
 }
