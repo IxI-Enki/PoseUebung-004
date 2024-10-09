@@ -320,3 +320,15 @@ public class Caravan
   }
 }
 ```
+<details>  
+   <summary> klick for a short Version: </summary>  
+
+```c#
+private class Element(PackAnimal animal , Element? next = null)
+{
+  public PackAnimal Animal { get; set; } = animal;
+  public Element? Next { get; set; } = next;
+}
+```
+ 
+</details>  
