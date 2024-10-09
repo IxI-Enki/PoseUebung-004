@@ -41,7 +41,7 @@ public abstract class PackAnimal
 </summary>
  
 ```c#
-public class Camel : PackAnimal
+public sealed class Camel : PackAnimal
 {
   public Camel(string name , int maxPace)
     : base(name , maxPace < 0 ? 0 : maxPace > 20 ? 20 : maxPace)
@@ -56,7 +56,7 @@ public class Camel : PackAnimal
 </summary>
 
 ```c#
-public class Horse : PackAnimal
+public sealed class Horse : PackAnimal
 {
   public Horse(string name , int maxPace)
     : base(name , maxPace < 0 ? 0 : maxPace > 70 ? 70 : maxPace)
