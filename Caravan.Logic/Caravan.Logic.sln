@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caravan.Logic", "Caravan.Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caravan.LogicTests", "..\Caravan.LogicTests\Caravan.LogicTests.csproj", "{41D90C54-4F33-4134-996D-FF2DE9FE995C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.ConApp", "..\Caravan.ConApp\Caravan.ConApp.csproj", "{4B39A843-86E4-4DB8-9AC6-9AEE9A26A321}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caravan.ConApp", "..\Caravan.ConApp\Caravan.ConApp.csproj", "{4B39A843-86E4-4DB8-9AC6-9AEE9A26A321}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caravan.Mono", "..\Caravan.Mono\Caravan.Mono.csproj", "{4E4E8FA0-CF6C-4E33-AE32-E64BF88D589F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{4B39A843-86E4-4DB8-9AC6-9AEE9A26A321}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B39A843-86E4-4DB8-9AC6-9AEE9A26A321}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B39A843-86E4-4DB8-9AC6-9AEE9A26A321}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E4E8FA0-CF6C-4E33-AE32-E64BF88D589F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E4E8FA0-CF6C-4E33-AE32-E64BF88D589F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E4E8FA0-CF6C-4E33-AE32-E64BF88D589F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E4E8FA0-CF6C-4E33-AE32-E64BF88D589F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

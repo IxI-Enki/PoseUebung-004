@@ -11,3 +11,6 @@
 /Caravan.Logic/.vs/ProjectEvaluation
 /Caravan.ConApp/bin/Debug/net8.0
 /Caravan.ConApp/obj
+/Caravan.Mono/obj
+/Caravan.Mono/.config
+*.mgcb
