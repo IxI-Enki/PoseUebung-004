@@ -8,10 +8,10 @@
 public abstract class PackAnimal
 {
   public PackAnimal() {  }
-  public PackAnimal(string name , int mp)
+  public PackAnimal(string name , int maxPace)
   {
     _name = name;
-    _maxPace = mp;
+    _maxPace = maxPace;
   }
 
   public string Name { get { return _name!; } }
