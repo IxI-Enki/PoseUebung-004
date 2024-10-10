@@ -58,12 +58,16 @@ namespace Caravan.Mono
     {
       GraphicsDevice.Clear(Color.CornflowerBlue);
 
-      _spriteBatch.Begin();
+      _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+
+      int thirdWidth = Window.ClientBounds.Width / 3;
+      int fifthHeight = Window.ClientBounds.Height / 5;
+
       _spriteBatch.Draw(background , new Rectangle(0 , 0 , Window.ClientBounds.Width , Window.ClientBounds.Height) , Color.White);
-      _spriteBatch.Draw(title , new Rectangle((Window.ClientBounds.Width / 2 - 256) , 4 , 512 , 128) , Color.White);
-      _spriteBatch.Draw(start , new Rectangle((Window.ClientBounds.Width / 2 - 120) , 142 , 240 , 54) , Color.White);
-      _spriteBatch.Draw(load , new Rectangle((Window.ClientBounds.Width / 2 - 120) , 216 , 240 , 54) , Color.White);
-      _spriteBatch.Draw(exit , new Rectangle((Window.ClientBounds.Width / 2 - 120) , 290 , 240 , 54) , Color.White);
+      _spriteBatch.Draw(title , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2) , 4 , thirdWidth , fifthHeight) , Color.White);
+      _spriteBatch.Draw(start , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2 + 50) , fifthHeight + 20 , thirdWidth - 100 , fifthHeight / 2) , Color.White);
+      _spriteBatch.Draw(load , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2 + 50) , fifthHeight + fifthHeight / 2 + 25 , thirdWidth - 100 , fifthHeight / 2) , Color.White);
+      _spriteBatch.Draw(exit , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2 + 50) , 2 * fifthHeight + 30 , thirdWidth - 100 , fifthHeight / 2) , Color.White);
 
       PrintCaravan();
 
@@ -76,16 +80,17 @@ namespace Caravan.Mono
     {
       int posX = _frameCounter;
       int number = 10;
+      int fifthHeight = Window.ClientBounds.Height / 5;
 
-      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 5 * number , Window.ClientBounds.Height - 256 , 128 , 128) , Color.White);
+      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
 
-      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 15 * number , Window.ClientBounds.Height - 256 , 128 , 128) , Color.White);
-      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 25 * number , Window.ClientBounds.Height - 256 , 128 , 128) , Color.White);
-      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 35 * number , Window.ClientBounds.Height - 256 , 128 , 128) , Color.White);
-      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 45 * number , Window.ClientBounds.Height - 256 , 128 , 128) , Color.White);
-      _spriteBatch.Draw(horse , new Rectangle(_frameCounter + 55 * number , Window.ClientBounds.Height - 256 , 128 , 128) , Color.White);
-      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 65 * number , Window.ClientBounds.Height - 256 , 128 , 128) , Color.White);
-      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 75 * number , Window.ClientBounds.Height - 256 , 128 , 128) , Color.White);
+      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 2* fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
+      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 3 * fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
+      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 4 * fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
+      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 5 * fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
+      _spriteBatch.Draw(horse , new Rectangle(_frameCounter + 6 * fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
+      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 7 * fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
+      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 8 * fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
 
 
       _frameCounter--;
