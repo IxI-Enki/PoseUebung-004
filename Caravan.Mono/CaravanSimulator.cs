@@ -5,6 +5,10 @@ using System;
 using Gum;
 using RenderingLibrary;
 using MonoGameGum.GueDeriving;
+using Gum.DataTypes;
+using Gum.Managers;
+using System.Linq;
+using GumRuntime;
 
 namespace Caravan.Mono
 {
@@ -39,11 +43,17 @@ namespace Caravan.Mono
       SystemManagers.Default = new SystemManagers();
       SystemManagers.Default.Initialize(_graphics.GraphicsDevice , fullInstantiation: true);
 
+      var gumProject = GumProjectSave.Load("GumProject/CaravanGumProject.gumx");
+      ObjectFinder.Self.GumProjectSave = gumProject;
+      gumProject.Initialize();
+      gumProject.Screens.First().ToGraphicalUiElement(
+      SystemManagers.Default , addToManagers: true);
+
       _caravanManager = new();
 
       _caravanManager.Initialize();
 
-      // TESTING GUM IMPLEMENTATION ✅
+      // testing GUM IMPLEMENTATION ✅
       /*
            var rectangle = new ColoredRectangleRuntime();
            rectangle.Width = 100;
@@ -71,6 +81,7 @@ namespace Caravan.Mono
       if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
         || Keyboard.GetState().IsKeyDown(Keys.Escape))
         Exit();
+
       SystemManagers.Default.Activity(gameTime.TotalGameTime.TotalSeconds);
 
       base.Update(gameTime);
@@ -78,31 +89,29 @@ namespace Caravan.Mono
 
     protected override void Draw(GameTime gameTime)
     {
-      GraphicsDevice.Clear(Color.CornflowerBlue);
+      GraphicsDevice.Clear(Color.Wheat);
 
-      _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-
-      int thirdWidth = Window.ClientBounds.Width / 3;
-      int fifthHeight = Window.ClientBounds.Height / 5;
-
-      _spriteBatch.Draw(background , new Rectangle(0 , 0 , Window.ClientBounds.Width , Window.ClientBounds.Height) , Color.White);
-      _spriteBatch.Draw(title , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2) , 4 , thirdWidth , fifthHeight) , Color.White);
-      _spriteBatch.Draw(start , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2 + 50) , fifthHeight + 20 , thirdWidth - 100 , fifthHeight / 2) , Color.White);
-      _spriteBatch.Draw(load , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2 + 50) , fifthHeight + fifthHeight / 2 + 25 , thirdWidth - 100 , fifthHeight / 2) , Color.White);
-      _spriteBatch.Draw(exit , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2 + 50) , 2 * fifthHeight + 30 , thirdWidth - 100 , fifthHeight / 2) , Color.White);
-
-      //PrintCaravan();
-
-      _spriteBatch.End();
-
-      _caravanManager.Draw();
+      // Oldscool Output ❌
+      /*
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            int thirdWidth = Window.ClientBounds.Width / 3;
+            int fifthHeight = Window.ClientBounds.Height / 5;
+            _spriteBatch.Draw(background , new Rectangle(0 , 0 , Window.ClientBounds.Width , Window.ClientBounds.Height) , Color.White);
+            _spriteBatch.Draw(title , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2) , 4 , thirdWidth , fifthHeight) , Color.White);
+            _spriteBatch.Draw(start , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2 + 50) , fifthHeight + 20 , thirdWidth - 100 , fifthHeight / 2) , Color.White);
+            _spriteBatch.Draw(load , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2 + 50) , fifthHeight + fifthHeight / 2 + 25 , thirdWidth - 100 , fifthHeight / 2) , Color.White);
+            _spriteBatch.Draw(exit , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2 + 50) , 2 * fifthHeight + 30 , thirdWidth - 100 , fifthHeight / 2) , Color.White);
+            //PrintCaravan();
+            _spriteBatch.End();
+            _caravanManager.Draw();
+            */
 
       SystemManagers.Default.Draw();
 
       base.Draw(gameTime);
     }
-
-    private void PrintCaravan()
+    /*
+       private void PrintCaravan()
     {
       int posX = _frameCounter;
       int number = 10;
@@ -123,8 +132,9 @@ namespace Caravan.Mono
       if (_frameCounter < -1000)
         _frameCounter = 1500;
     }
+    private int _frameCounter = 1500;
+    */
 
     private CaravanManager _caravanManager;
-    private int _frameCounter = 1500;
   }
 }

@@ -457,18 +457,95 @@
         "TimestampUtc": "2024-10-11T10:21:46.4369443Z"
       },
       {
-        "NewName": "TitleScreen",
+        "NewName": "SpriteContainer",
         "OldName": null,
-        "ElementType": "Screens",
+        "ElementType": "Components",
         "EventType": 0,
-        "TimestampUtc": "2024-10-11T15:40:06.3154401Z"
+        "TimestampUtc": "2024-10-11T18:49:08.3689098Z"
+      },
+      {
+        "NewName": "SpriteContainer (Container).SpriteInstance",
+        "OldName": null,
+        "ElementType": "Components",
+        "EventType": 5,
+        "TimestampUtc": "2024-10-11T18:49:16.3546535Z"
+      },
+      {
+        "NewName": "TitleScreen.ScreenContainer",
+        "OldName": "TitleScreen.ContainerInstance",
+        "ElementType": "Screens",
+        "EventType": 7,
+        "TimestampUtc": "2024-10-11T18:50:26.4827268Z"
       },
       {
         "NewName": "TitleScreen.ContainerInstance",
         "OldName": null,
         "ElementType": "Screens",
         "EventType": 5,
-        "TimestampUtc": "2024-10-11T15:40:13.1015545Z"
+        "TimestampUtc": "2024-10-11T18:50:51.000938Z"
+      },
+      {
+        "NewName": null,
+        "OldName": "TitleScreen.Container ContainerInstance in TitleScreen",
+        "ElementType": "Screens",
+        "EventType": 6,
+        "TimestampUtc": "2024-10-11T18:50:54.7887627Z"
+      },
+      {
+        "NewName": "TitleScreen.SpriteContainerInstance",
+        "OldName": null,
+        "ElementType": "Screens",
+        "EventType": 5,
+        "TimestampUtc": "2024-10-11T18:50:56.9895858Z"
+      },
+      {
+        "NewName": "TitleScreen.TitleContainerInstance",
+        "OldName": "TitleScreen.SpriteContainerInstance",
+        "ElementType": "Screens",
+        "EventType": 7,
+        "TimestampUtc": "2024-10-11T18:52:34.6373446Z"
+      },
+      {
+        "NewName": "TitleScreen.ContainerInstance",
+        "OldName": null,
+        "ElementType": "Screens",
+        "EventType": 5,
+        "TimestampUtc": "2024-10-11T19:00:04.8187516Z"
+      },
+      {
+        "NewName": "TitleScreen.ButtonContainerInstance",
+        "OldName": "TitleScreen.ContainerInstance",
+        "ElementType": "Screens",
+        "EventType": 7,
+        "TimestampUtc": "2024-10-11T19:00:14.3593412Z"
+      },
+      {
+        "NewName": "Button",
+        "OldName": null,
+        "ElementType": "Components",
+        "EventType": 0,
+        "TimestampUtc": "2024-10-11T19:02:04.9047773Z"
+      },
+      {
+        "NewName": "Button (Container).NineSliceInstance",
+        "OldName": null,
+        "ElementType": "Components",
+        "EventType": 5,
+        "TimestampUtc": "2024-10-11T19:02:16.7638389Z"
+      },
+      {
+        "NewName": "Button (Container).TextInstance",
+        "OldName": null,
+        "ElementType": "Components",
+        "EventType": 5,
+        "TimestampUtc": "2024-10-11T19:02:57.9947886Z"
+      },
+      {
+        "NewName": "TitleScreen.ButtonInstance",
+        "OldName": null,
+        "ElementType": "Screens",
+        "EventType": 5,
+        "TimestampUtc": "2024-10-11T19:03:34.4659247Z"
       }
     ]
   }
