@@ -1,15 +1,96 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
+using Caravan.Logic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace Caravan.Logic;
+namespace Caravan.Mono;
+
+public class CaravanManager
+{
+  private List<Caravan> _caravans = [ ];
+  private int _lastPosX = 0;
+  public List<Caravan> AllCaravans { get => _caravans; set => _caravans = value; }
+
+  internal void Draw()
+  {
+    if (AllCaravans != null)
+      DrawCaravan(AllCaravans[ 0 ]);
+  }
+
+  private void DrawCaravan(Caravan caravan)
+  {
+    int counter = 0;
+    Caravan.Element run = new(caravan[ 0 ]);
+    while (run != null && counter < caravan.Count)
+    {
+      counter++;
+      if (counter < caravan.Count)
+        run.Next = new(caravan[ counter ]);
+      DrawPackAnimal(run);
+      run = run.Next;
+      _lastPosX += 64;
+    }
+    _lastPosX = 0;
+  }
+
+  private void DrawPackAnimal(Caravan.Element run)
+  {
+
+    if (run != null)
+    {
+      PackAnimal animalToDraw = run.Animal;
+
+      Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+      Globals.SpriteBatch.Draw(
+        GetSprite(animalToDraw) ,
+        new Rectangle(_lastPosX , 0 , 64 , 64) ,
+        Color.White);
+      Globals.SpriteBatch.End();
+    }
+  }
+
+  private Texture2D GetSprite(PackAnimal animal)
+  {
+    if (animal is Camel)
+      return Globals.camel;
+    if (animal is Horse)
+      return Globals.horse;
+    else
+      return null;
+  }
+
+  internal void Initialize()
+  {
+    Caravan saharaExpress = new("Sahara Express");
+    AllCaravans.Add(saharaExpress);
+
+    Camel hoecke = new("Höcke" , 12);
+    Camel hoecke2 = new("Höcke2" , 12);
+    Camel hoecke3 = new("Höcke2" , 12);
+    Camel hoecke4 = new("Höcke2" , 12);
+    Camel hoecke5 = new("Höcke2" , 12);
+    Camel hoecke6 = new("Höcke2" , 12);
+    Horse alice = new("Alice" , 22);
+    hoecke.Load = 2;
+    saharaExpress.AddPackAnimal(hoecke);
+    saharaExpress.AddPackAnimal(hoecke2);
+    saharaExpress.AddPackAnimal(hoecke3);
+    saharaExpress.AddPackAnimal(hoecke4);
+    saharaExpress.AddPackAnimal(hoecke5);
+    saharaExpress.AddPackAnimal(hoecke6);
+    saharaExpress.AddPackAnimal(alice);
+  }
+}
 
 public class Caravan
 {
   public Caravan(string name = "") { _caravanName = name; }
 
-  /// <summary>
-  /// Gibt die Anzahl der Tragtiere in der Karavane zurück
-  /// </summary>
   public int Count
   {
     get
@@ -25,10 +106,6 @@ public class Caravan
       return count;
     }
   }
-
-  /// <summary>
-  /// Anzahl der Ballen der gesamten Karawane
-  /// </summary>
   public int Load
   {
     get
@@ -44,13 +121,6 @@ public class Caravan
       return loadCount;
     }
   }
-
-  /// <summary>
-  /// Indexer, der ein Packtier nach Namen sucht und zurückgibt.
-  /// Existiert das Packtier nicht, wird NULL zurückgegeben.
-  /// </summary>
-  /// <param name="name">Name des Packtiers</param>
-  /// <returns>Packtier</returns>
   public PackAnimal? this[ string name ]
   {
     get
@@ -63,14 +133,6 @@ public class Caravan
       return run!.Animal;
     }
   }
-
-  /// <summary>
-  /// Indexer, der ein Packtier entsprechend der Position in der Karawane sucht 
-  /// und zurückgibt (0 --> Erstes Tier in der Karawane)
-  /// Existiert die Position nicht, wird NULL zurückgegeben.
-  /// </summary>
-  /// <param name="index"></param>
-  /// <returns></returns>
   public PackAnimal? this[ int index ]
   {
     get
@@ -86,12 +148,6 @@ public class Caravan
       return run!.Animal;
     }
   }
-
-  /// <summary>
-  /// Liefert die Reisegeschwindigkeit dieser Karawane, die
-  /// vom langsamsten Tier bestimmt wird. Dabei wird die Ladung 
-  /// der Tiere berücksichtigt
-  /// </summary>
   public int Pace
   {
     get
@@ -113,24 +169,16 @@ public class Caravan
     }
     return slowest!.Animal;
   }
-
-  /// <summary>
-  /// Fügt ein Tragtier in die Karawane ein.
-  /// Dem Tragtier wird mitgeteilt, in welcher Karawane es sich nun befindet.
-  /// </summary>
-  /// <param name="packAnimal">einzufügendes Tragtier</param>
   public void AddPackAnimal(PackAnimal? packAnimal)
   {
-    //    if (packAnimal == null) return;
     if (packAnimal!.MyCaravan != null)
       RemovePackAnimal(packAnimal);
+
     if (_first == null)
     {
       packAnimal.MyCaravan = this;
       _first = new Element(packAnimal! , _first);
     }
-    /*
-    */
 
     if (IsNotInCaravan(packAnimal))
     {
@@ -157,15 +205,8 @@ public class Caravan
     }
     return !isInCaravan;
   }
-
-  /// <summary>
-  /// Nimmt das Tragtier o aus dieser Karawane heraus
-  /// </summary>
-  /// <param name="packAnimal">Tragtier, das die Karawane verläßt</param>
   public void RemovePackAnimal(PackAnimal packAnimal)
   {
-    //    if (packAnimal == null || this.Count == 0) return;
-
     packAnimal.MyCaravan = null;
 
     if (_first!.Animal == packAnimal)
@@ -185,10 +226,6 @@ public class Caravan
       }
     }
   }
-
-  /// <summary>
-  /// Entlädt alle Tragtiere dieser Karawane
-  /// </summary>
   public void Unload()
   {
     Element? run = _first;
@@ -198,13 +235,6 @@ public class Caravan
       run = run.Next;
     }
   }
-
-  /// <summary>
-  /// Verteilt zusätzliche Ballen Ladung so auf die Tragtiere 
-  /// der Karawane, dass die Reisegeschwindigkeit möglichst hoch bleibt
-  /// Tipp: Gib immer einen Ballen auf das belastbarste (schnellste) Tier bis alle Ballen vergeben sind
-  /// </summary>
-  /// <param name="load">Anzahl der Ballen Ladung</param>
   public void AddLoad(int load)
   {
     int loadToDistribute = load;
@@ -229,7 +259,6 @@ public class Caravan
     }
     return fastest!.Animal;
   }
-
   public override string ToString()
   {
     StringBuilder sb = new();
@@ -247,53 +276,35 @@ public class Caravan
     }
     return sb.ToString();
   }
-  public void PrintCaravan()
-  {
-    Element? run = _first;
-    StringBuilder sb = new StringBuilder();
 
-    sb.Append("🧍");
-
-    while (run != null)
-    {
-      sb.Append(FindAnimalEmoji(run)); // ..
-      run = run.Next;
-      if (run != null)
-        sb.Append("ᴗ");
-    }
-    Console.Write(sb.ToString());
-  }
-
-  private string FindAnimalEmoji(Element run)
-  {
-    string animalEmoji = "";
-    switch (run.Animal)
-    {
-      case Horse:
-        animalEmoji = "🐎";
-        break;
-      case Camel:
-        animalEmoji = "🐫";
-        break;
-    }
-    return animalEmoji;
-  }
-
-  #region FIELDS
   private Element? _first = null;
-  private string _caravanName;        // implement mit nameof() ? 
-  #endregion
+  private string _caravanName;
 
-  #region EMBEDED CLASS ELEMENT
-  private class Element       
+  public class Element(PackAnimal animal , Element? next = null)
   {
-    public Element(PackAnimal animal , Element? next = null)
-    {
-      Animal = animal;
-      Next = next;
-    }
-    public PackAnimal Animal { get; set; }
-    public Element? Next { get; set; }
-    #endregion
+    public PackAnimal Animal { get; set; } = animal;
+    public Element? Next { get; set; } = next;
   }
+}
+
+public abstract class PackAnimal(string name , int maxPace)
+{
+  public abstract int Pace { get; }
+  public string Name { get; } = name;
+  public int MaxPace { get; } = maxPace;
+  public Caravan? MyCaravan { get; set; } = null;
+  public int Load { get => _load; set => _load = value < 0 ? 0 : value; }
+  public override string ToString() => $"{Name} ({Load}/{Pace}/{MaxPace})";
+
+  private int _load = 0;
+}
+public sealed class Camel(string name , int maxPace)
+  : PackAnimal(name , maxPace < 0 ? 0 : maxPace > 20 ? 20 : maxPace)
+{
+  public override int Pace => MaxPace - Load;
+}
+public sealed class Horse(string name , int maxPace)
+  : PackAnimal(name , maxPace < 0 ? 0 : maxPace > 70 ? 70 : maxPace)
+{
+  public override int Pace => MaxPace - Load * 10;
 }

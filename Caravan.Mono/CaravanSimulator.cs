@@ -2,17 +2,23 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using Gum;
+using RenderingLibrary;
+using MonoGameGum.GueDeriving;
 
 namespace Caravan.Mono
 {
   public class CaravanSimulator : Game
   {
     private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
     private Texture2D horse, camel, title, exit, load, start, background;
+
+    private SpriteBatch _spriteBatch;
+    public SpriteBatch SpriteBatch { get => _spriteBatch; set => _spriteBatch = value; }
 
     public CaravanSimulator()
     {
+
       _graphics = new GraphicsDeviceManager(this);
       Content.RootDirectory = "Content";
 
@@ -24,12 +30,27 @@ namespace Caravan.Mono
 
       Window.Title = "Karawanen Simulator 9000";
       IsMouseVisible = true;
-      //     Window.IsBorderless = true;
+
+      Globals.Init(this);
+      Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
     }
     protected override void Initialize()
     {
-      // TODO: Add your initialization logic here
+      SystemManagers.Default = new SystemManagers();
+      SystemManagers.Default.Initialize(_graphics.GraphicsDevice , fullInstantiation: true);
 
+      _caravanManager = new();
+
+      _caravanManager.Initialize();
+
+      // TESTING GUM IMPLEMENTATION ✅
+      /*
+           var rectangle = new ColoredRectangleRuntime();
+           rectangle.Width = 100;
+           rectangle.Height = 100;
+           rectangle.Color = Color.White;
+           rectangle.AddToManagers(SystemManagers.Default , null);
+           */
       base.Initialize();
     }
 
@@ -50,6 +71,7 @@ namespace Caravan.Mono
       if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
         || Keyboard.GetState().IsKeyDown(Keys.Escape))
         Exit();
+      SystemManagers.Default.Activity(gameTime.TotalGameTime.TotalSeconds);
 
       base.Update(gameTime);
     }
@@ -69,9 +91,13 @@ namespace Caravan.Mono
       _spriteBatch.Draw(load , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2 + 50) , fifthHeight + fifthHeight / 2 + 25 , thirdWidth - 100 , fifthHeight / 2) , Color.White);
       _spriteBatch.Draw(exit , new Rectangle((Window.ClientBounds.Width / 2 - thirdWidth / 2 + 50) , 2 * fifthHeight + 30 , thirdWidth - 100 , fifthHeight / 2) , Color.White);
 
-      PrintCaravan();
+      //PrintCaravan();
 
       _spriteBatch.End();
+
+      _caravanManager.Draw();
+
+      SystemManagers.Default.Draw();
 
       base.Draw(gameTime);
     }
@@ -84,7 +110,7 @@ namespace Caravan.Mono
 
       _spriteBatch.Draw(camel , new Rectangle(_frameCounter + fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
 
-      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 2* fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
+      _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 2 * fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
       _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 3 * fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
       _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 4 * fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
       _spriteBatch.Draw(camel , new Rectangle(_frameCounter + 5 * fifthHeight + number , Window.ClientBounds.Height - 2 * fifthHeight , fifthHeight , fifthHeight) , Color.White);
@@ -98,6 +124,7 @@ namespace Caravan.Mono
         _frameCounter = 1500;
     }
 
+    private CaravanManager _caravanManager;
     private int _frameCounter = 1500;
   }
 }

@@ -6,11 +6,33 @@ internal class Program
 {
   static void Main(string[ ] args)
   {
-    Console.OutputEncoding = Encoding.UTF8;
+    //  Console.OutputEncoding = Encoding.UTF8;
+
+    Camel hoecke = new Camel("Höcke" , 14);
+    hoecke.Load = 10;
+
     Logic.Caravan saharaExpress = new("Sahara-Express");
 
-    Camel hoecke = new("Höcke" , 14);
-    hoecke.Load = 2;
+    saharaExpress.AddPackAnimal(hoecke);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     Horse weidel = new("Weidel" , 44);
     weidel.Load = 2;
     Camel aladin = new("Aladin" , 20);
@@ -28,6 +50,8 @@ internal class Program
     saharaExpress.PrintCaravan();
     Console.WriteLine();
     Console.WriteLine(saharaExpress);
+    */
     Console.ReadLine();
+
   }
 }
